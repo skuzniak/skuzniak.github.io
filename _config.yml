@@ -10,7 +10,7 @@ title: Sitecore notes
 email: kuzniak.szymon@gmail.com
 description: > # this is my blog post about Sitecore
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://sitecorenotes.com" # the base hostname & protocol for your site
+url: "https://skuzniak.github.io" # the base hostname & protocol for your site
 twitter_username: skuzniak
 github_username:  skuzniak
 

@@ -1,0 +1,7 @@
+<div id="post-nav">
+  <ul class="clear-after reset plain">
+    <li id="prev-items" class="post-nav">{% if include.post.previous %}<a href="{{include.post.previous.url}}"><i class="fa fa-chevron-left"></i><span class="label hidden-mobile">{{include.post.previous.title}}</span></a>{% endif %}</li>
+    <li id="all-items" class="post-nav"><a href="/"><i class="icon icon-images"></i></a></li>
+    <li id="next-items" class="post-nav">{% if include.post.next %}<a href="{{include.post.next.url}}"><span class="label hidden-mobile">{{include.post.next.title}}</span><i class="fa fa-chevron-right"></i></a>{% endif %}</li>
+  </ul>
+</div>

@@ -1,0 +1,25 @@
+---
+layout: default
+heading: Code &amp; stories
+headline: Writing of all sort
+image: /images/blog-cover.jpg
+css-classes: blog list-style
+---
+<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
+	<div class="column nine">
+    {% for post in site.posts %}
+		<article class="clear-after">
+			<div class="column three">
+				<figure><img src="http://placehold.it/600x600/ddd/fff&text=Beetle%20image" alt=""></figure>
+			</div><!-- column three -->
+			<div class="column nine last">
+				<h2><a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h2>
+				{% include post-meta.html post=post %}
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+			</div><!-- column nine -->
+		</article>
+    {% endfor %}
+  </div><!-- column nine -->
+  {% include sidebar.html %}
+</div><!-- row-content -->
+<!--<p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>-->

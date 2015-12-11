@@ -1,0 +1,10 @@
+<div id="intro-wrap"  data-height="22.222">
+  <div id="intro" class="preload darken">
+    <div class="intro-item" style="background-image: url({{ page.image }});">
+      <div class="caption">
+        <h2>{% if page.title %}{{ page.title }}{% else %}{{ page.heading }}{% endif %}</h2>
+        {% if page.headline %}<p>{{ page.headline }}</p>{% endif %}
+      </div><!-- caption -->
+    </div><!-- intro -->
+  </div><!-- intro -->
+</div><!-- intro-wrap -->

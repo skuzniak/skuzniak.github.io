@@ -1,0 +1,3 @@
+<h5 class="meta-post">{% for category in include.post.categories %}
+<a href="{{ category | prepend: site.baseurl }}" >{{ category }}</a>{% if category != include.post.last %}, {%endif %}
+{% endfor %} • <time datetime="{{ include.post.date | date_to_xmlschema }}" itemprop="datePublished">{{ include.post.date | date: "%b %-d, %Y" }}</time>{% if include.post.author %}<span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ include.post.author }}</span></span>{% endif %}</h5></h5>

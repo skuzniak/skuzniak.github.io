@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<div class="row-content buffer-left buffer-right buffer-bottom clear-after">
+  <div class="post-area clear-after">
+  	<article role="main" class="column nine">
+  		{% include post-meta.html post=page %}
+  		{{ content }}
+  	</article>
+    {% include sidebar.html %}
+  </div>
+  {% include post-navigation.html post=page %}
+</div>

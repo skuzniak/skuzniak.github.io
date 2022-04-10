@@ -129,7 +129,7 @@ At the end I would like to say big köszönöm (thank you in Hungarian) to every
 Everyone involed in organization of this great event - without you my talk would have never existed.
 Łukasz Skowronski who was a great support as a room master.
 Sebastian Winter who helped me shape the presentation.
-All my friends and collegues from Poland and Actum Digital who showed their support.
+All my friends and collegues from Poland and Apollo Division who showed their support.
 
 <figure>
 <img src="/assets/posts/content-hub-for-developers/sugcon-budapest.jpeg" alt="Mandatory run to catch-up with the sightseeing." />

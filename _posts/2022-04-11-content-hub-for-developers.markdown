@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Sitecore Content Hub for Developers"
-date:   2022-04-09 15:00:0 +0100
+date:   2022-04-11 15:00:0 +0100
 categories: sugcon content-hub speaking
 author: Szymon Kuzniak
 ---

@@ -11,6 +11,7 @@ It's trivia to say that time flies.
 <img src="/assets/posts/content-hub-for-developers/sugcon-before-presentation.jpeg" alt="Me with a nervous smile before my presentation." />
 <figcaption>Me with a nervous smile before my presentation.</figcaption>
 </figure>
+
 I remember preparing my submission for Sugcon CFP in December, then the shock when my talk was accepted and freaking out for three months about presenting in front of entire Sitecore community and now here we are, two weeks after this splendid event. 
 The conference was great as previous two events I have attended and it was good to see that the community is still strong.
 

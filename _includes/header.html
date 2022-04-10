@@ -1,0 +1,44 @@
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- Header
+    ================================================== -->
+    <header class="s-header">
+
+        <div class="row">
+
+            <div class="s-header__content column">
+                <h1 class="s-header__logotext">
+                    <a href="index.html" title="">{{ site.title }}</a>
+                </h1>
+                <p class="s-header__tagline">Put your awesome tagline here.</p>
+            </div>
+
+        </div> <!-- end row -->
+
+       <nav class="s-header__nav-wrap">
+
+           <div class="row">
+
+                <ul class="s-header__nav">
+                    {% for item in site.data.navigation %}
+                        <li {%if page.url == item.link %}class="current"{% endif %}><a href="{{ item.link }}">{{ item.name }}</a></li>
+                    {% endfor %}
+                </ul> <!-- end #nav -->
+
+           </div> 
+
+        </nav> <!-- end #nav-wrap -->
+
+        <a class="header-menu-toggle" href="#0" title="Menu"><span>Menu</span></a>
+
+    </header> <!-- Header End -->

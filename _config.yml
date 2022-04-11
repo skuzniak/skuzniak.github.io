@@ -29,6 +29,8 @@ url: "https://skuzniak.github.io" # the base hostname & protocol for your site, 
 twitter_username: skuzniak
 github_username:  skuzniak
 
+permalink: '/:year/:month/:day/:title'
+
 # Build settings
 theme: minima
 plugins:

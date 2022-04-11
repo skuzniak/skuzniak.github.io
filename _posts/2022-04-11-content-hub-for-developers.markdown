@@ -74,6 +74,73 @@ My idea for working with the scripts was pretty simple.
 I have set up a base class which consits of a Execute and SetUp methods.
 In a SetUp method I am creating a script context which is just an object based on [this documentation page](https://docs.stylelabs.com/contenthub/4.0.x/content/api-reference/scripting/stylelabs.m.scripting.types.v1_0.action.iactionscriptcontext.html).
 The Execute method contains actual script.
+
+    // IScript interface defines only Execute method
+    public abstract class BaseScript : IScript
+    {
+        // This field is available withing the script to interact with the API
+        protected IWebMClient MClient { get; private set; }
+
+        // This object contains the context of the script
+        protected ScriptContext Context { get; private set; }
+
+        public BaseScript()
+        {
+            Uri endpoint = new Uri("https://contenthub.url/");
+
+            OAuthPasswordGrant oauth = new OAuthPasswordGrant
+            {
+                // These two values can be found in OAuth clients page in Manage section within Content Hub
+                ClientId = "ID of the client",
+                ClientSecret = "Client secret,
+                // Username and password
+                UserName = "john.doe",
+                Password = "super_secret"
+            };
+
+            MClient = MClientFactory.CreateMClient(endpoint, oauth);
+            Context = new ScriptContext();
+
+            SetUp().Wait();
+        }
+
+        public abstract void Execute();
+
+        public abstract Task SetUp();
+    }
+
+And below is an example implementation
+
+    /*
+     * This example script always sets a relation between product
+     * for which it is run and the "Sweets" tag, represented by an id
+     * 33857
+     */
+    public class EnsureSweetsTags : BaseScript
+    {
+        public async override void Execute()
+        {
+            // Only contents of this method is used within Content Hub
+            var tagsRelationName = "S.Demo.ProductToTags";
+            var sweetsEntityId = 33875;
+
+            // During development Context is set in the SetUp method below. In the script it is set by Content Hub
+            var entity = Context.Target as IEntity;
+
+            await entity.LoadRelationsAsync(new RelationLoadOption(tagsRelationName));
+            var tagsRelation = entity.GetRelation<IChildToManyParentsRelation>(tagsRelationName);
+
+            tagsRelation.Add(sweetsEntityId);
+
+            await MClient.Entities.SaveAsync(entity);
+        }
+
+        public async override Task SetUp()
+        {
+            this.Context.Target = await MClient.Entities.GetAsync(33873);
+        }
+    }
+
 In this way I can develop my script inside Visual Studio, taking advantage of all of its cool features and once the script is ready I can simply copy it to Content Hub.
 This is maybe a little naive solution but it's a good start for something more comprehensive, like [this example Content Hub solution](https://github.com/sitecore/contenthub-vs-solution-example).
 
@@ -103,6 +170,24 @@ Content hub provides command line interface which allows for some handy operatio
 If that's not enough is possible to develop custom plugins.
 It is possible to select which system components to include in the package, where to save it and how it should be named.
 Just perfect.
+
+First it is necessary to register and endpoint. ClientId and ClientSecret can be found in OAuth Clients page in Manage section inside the Content Hub. Redirect URI should match the URI set in the OAuth client.
+
+    ch-cli endpoint add --name "Sandbox" --url "https://contenthub.url/" --client-id "ClientId" --client-secret "ClientSecret" --redirect-uri=http://localhost:9000
+
+Once the endpoint is created it is possible to run the actual script.
+
+    $date = Get-Date -Format "yyyyMMddhhmm"
+
+    if (-not (Test-Path $date)) {
+        New-Item -Type Directory $date
+    }
+
+    ch-cli system  export -t EntityDefinitions -t OptionLists -o "$date/01-DEV-release-$date.zip"
+    ch-cli system  export -t Triggers -t Scripts -t StateFlows -o "$date/02-DEV-release-$date.zip"
+    ch-cli system  export -t ExportProfiles -t MediaProcessing -t RenditionLinks -t Settings -o "$date/03-DEV-release-$date.zip"
+    ch-cli system  export -t PortalPages -o "$date/04-DEV-release-$date.zip"
+    ch-cli system  export -t Policies -o "$date/05-DEV-release-$date.zip"
 
 ## Sitecore XP and Content Hub
 

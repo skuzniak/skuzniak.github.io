@@ -34,7 +34,84 @@ As the final touch, I will get some basic data from the modified entity to creat
 
 Let's see how the script looks like
 
-    // lorem the script goes here
+    // let's start with some definitions
+    var productEntityDefinitionName = "Demo.Product";
+    var departmentRelationName = "Demo.DepartmentToProduct";
+
+    var settingsGroupName = "Demo.Notifications";
+    var settingName = Demo.DepartmentToGroupMapping";
+    var settingValuePropertyName = "M.Setting.Value";
+
+    // Step 1. Get the name of the department.
+    var entity = (IEntity)Context.Target;
+
+    if (entity.DefinitionName != productEntityDefinitionName)
+    {
+        return;
+    }
+
+    await entity.LoadRelationsAsync(new RelationLoadOption(departmentRelationName));
+    var relation = entity.GetRelationAsync<IChildToOneParentRelation>(departmentRelationName);
+    var departmentId = relation.Result.Parent;
+
+    if (!departmentId.HasValue)
+    {
+        return;
+    }
+
+    // Step 2. Get the name of the group, based on the mapping from the settings.
+    var groupsToNotifySetting = await MClient.Settings.GetSettingAsync(settingsGroupName, settingName).ConfigureAwait(false);
+    var settingValue = groupsToNotifySetting?.GetProperty<ICultureInsensitiveProperty>(settingValuePropertyName);
+    if (settingValue == null)
+    {
+        MClient.Logger.Error($"Unable to get {settingName} from the {settingGroupName}.");
+        return;
+    }
+
+    var settingJobjectValue = settingValue.GetValue<JObject>();
+    if (settingJobjectValue == null)
+    {
+        MClient.Logger.Error($"Can't get {settingGroupName} property value");
+        return;
+    }
+
+    var settingGroupMappings = settingJobjectValue["groupMapping"];
+    if (settingGroupMappings == null)
+    {
+        MClient.Logger.Error("Can't get JSON object 'groupMapping'");
+        return;
+    }
+
+    var groupNameObject = settingGroupMappings.FirstOrDefault(m => m["department"]?.Value<string>() == $"{departmentId}");
+    var groupName = groupNameObject == null ? string.Empty : groupNameObject["group"]?.Value<string>();
+
+    if (string.IsNullOrEmpty(groupName))
+    {
+        return;
+    }
+
+    // Step 3. Send the email to the users who belong to the found group, using notifications client.
+    var groupId = MClient.Users.GetUserGroupIdAsync(groupName).Result;
+    var userQuery = Query.CreateQuery(entities => from e in entities
+                                                    where e.DefinitionName == "User"
+                                                    && e.Parent("UserGroupToUser") == groupId.Value
+                                                    select e);
+    var users = MClient.Querying.QueryAsync(userQuery, new EntityLoadConfiguration { RelationLoadOption = RelationLoadOption.All }).Result;
+
+    var emailRequest = new MailRequestById
+    {
+        Recipients = users.Items.Select(u => u.Id ?? 0).ToList(),
+        MailTemplateName = "CustomTemplateName",
+    };
+
+    var productPath = $"PathTo/ProductDetail/{entity.Id}"; // use this to constuct link to the changed product
+
+    // use variables to pass data from the script to the email template (variable has to be created when the template is created).
+    emailRequest.Variables.Add("ProductName", entity.Identifier);
+    emailRequest.Variables.Add("DateUpdated", DateTime.Now);
+    emailRequest.Variables.Add("ProductPath", productPath);
+
+    await MClient.Notifications.SendEmailNotificationAsync(emailRequest);
 
 Once the script is ready and published, I can create an action and a trigger.
 I will start with adding new trigger (yes, I remember I was writing about suggested order, but, once you pass the certification exam, you should know that actions can also be created from the trigger screen).

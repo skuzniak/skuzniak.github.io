@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Custom notifications in Sitecore Content Hub - Trigger and complete script"
-date:   2022-08-19 15:00:0 +0100
+date:   2022-08-23 15:00:0 +0100
 categories: content-hub custom-notifications custom-settings
 author: Szymon Kuzniak
 ---

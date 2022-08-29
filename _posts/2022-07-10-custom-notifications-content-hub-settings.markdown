@@ -5,9 +5,9 @@ date:   2022-07-10 15:00:0 +0100
 categories: content-hub custom-notifications custom-settings
 author: Szymon Kuzniak
 ---
-This post is a second part of series about creating custom notifications with Sitecore Content Hub.
+This post is a second part of the series about creating custom notifications with Sitecore Content Hub.
 The problem I am trying to address is triggering an email notification when the entity is updated, depending on the value of one of the relations.
-In other words if a product which belongs to "Health" department is modified, I want to send email notification only to members of groups related to healt.
+In other words, if a product which belongs to "Health" department is modified, I want to send email notification only to members of groups related to healt.
 
 ### Custom notifications in Sitecore Content Hub
 

@@ -1,11 +1,7 @@
 ---
 layout: post
 title:  "Custom notifications in Sitecore Content Hub - Trigger and complete script"
-<<<<<<< HEAD:_posts/2022-08-29-custom-notifications-content-hub-wrapup.markdown
 date:   2022-08-29 15:00:0 +0100
-=======
-date:   2022-08-23 15:00:0 +0100
->>>>>>> a2e7d7c19a714516c8dcb46e1f5c2908c87f2b85:_posts/2022-08-23-custom-notifications-content-hub-wrapup.markdown
 categories: content-hub custom-notifications custom-settings
 author: Szymon Kuzniak
 ---
@@ -37,7 +33,7 @@ As the final touch, I will get some basic data from the modified entity to creat
 
 Let's see how the script looks like
 
-        using Newtonsoft.Json.Linq;
+    using Newtonsoft.Json.Linq;
     using Stylelabs.M.Sdk.Models.Notifications;
     using System.Linq;
 

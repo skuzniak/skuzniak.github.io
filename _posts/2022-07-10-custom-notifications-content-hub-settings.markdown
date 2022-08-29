@@ -15,6 +15,7 @@ This post is part of the series:
 
 1. [Create email template](/2022/06/21/custom-notifications-content-hub)
 2. Custom settings <= you are here
+3. [Trigger and complete script](/2022/08/29/custom-notifications-content-hub-wrapup)
 
 In this part I am going to use Content Hub settings to map user groups to the relation values.
 This will allow me to easily manage the mapping and have different settings depending on the environment.

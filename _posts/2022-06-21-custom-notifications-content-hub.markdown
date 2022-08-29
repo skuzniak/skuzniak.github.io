@@ -20,6 +20,7 @@ This post is part of the series:
 
 1. Create email template <= you are here
 2. [Custom settings](/2022/07/10/custom-notifications-content-hub-settings)
+3. [Trigger and complete script](/2022/08/29/custom-notifications-content-hub-wrapup)
 
 Once I had the idea of how I can approach this task, I wanted to create an email template.
 And this turned out to be not so easy as I initially assumed because... there is no such option.

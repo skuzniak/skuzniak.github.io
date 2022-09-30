@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Custom notifications in Sitecore Content Hub - Saved Selection"
+title:  "Custom notifications in Sitecore Content Hub - Saved Selection [UPDATE]"
 date:   2022-09-28 13:00:0 +0100
 categories: content-hub custom-notifications custom-settings
 author: Szymon Kuzniak
@@ -73,14 +73,14 @@ Let's see how the script looks like
     var distinctUsers = users.Distinct().ToList();
 
     // prepare data to be sent to the template
-    var savedSelectionLink = "/en-us/assets-module/assets"; // this is tricky stuff, couldn't find out how to get a link to saved selection
+    var savedSelectionLink = $"/assets?saved_selection={entity.Id}"; // UPDATE: the link now leads to the actual selection
     var sharingUser = entity.CreatedBy.HasValue ? MClient.Users.GetUsernameAsync(entity.CreatedBy.Value).Result : string.Empty;
 
     // create and send the notification
     var emailRequest = new MailRequestById
     {
         Recipients = distinctUsers,
-        MailTemplateName = "SavedSelectionSharedNotification",
+        MailTemplateName = "TemplateNameGoesHere",
     };
     emailRequest.Variables.Add("SelectionLink", savedSelectionLink);
     emailRequest.Variables.Add("SelectionAuthor", author);
@@ -89,5 +89,23 @@ Let's see how the script looks like
 
 This is it for now.
 I really hope I will be able to update this page soon with the way to get the link to the saved selection.
+
+## Update
+
+With the help of Sitecore Support and a little bit of digging I managed to solve the problem with generating link to my selection.
+Sitecore Suppport engineer suggested there is a link which will redirect to the saved selection.
+After a bit of digging in the source of the website, I have noticed there is a page called **My Selections**.
+Normally, it can be reached from the profile menu (quite obvious now, that I know it exists).
+
+<figure>
+<img src="/assets/posts/content-hub-notifications-saved-selections/saved-selection.png" alt="Link to the list of saved selections on the profile menu." />
+<figcaption>Link to the list of saved selections on the profile menu.</figcaption>
+</figure>
+
+Now when you click on the selection you will see the link pattern it uses:
+
+    {InstanceURL}/{locale}/assets?saved_selection={SelectionId}
+
+SelectionId is the entity id, so it can be easily retrieved in the script.
 
 Happy coding!

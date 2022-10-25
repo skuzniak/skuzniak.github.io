@@ -29,6 +29,10 @@ The configuration can be divided into three parts.
 In order to setup Azure Service Bus to work with Sitecore connector, you will need Topics.
 This is important when choosing the pricing tier - it has to be at least **Standard** - Basic subscription will not have Topics enabled.
 
+The reason for that is simple - topics are meant to be used with multiple consumers through the use of the subscriptions.
+Queue would allow only single sender and single consumer, but topic allows for a single sender and multiple consumers, which are using different subsrciptions.
+For more information you can check the [detailed description of queues, topics and subscriptions](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions)
+
 <figure>
 <img src="/assets/posts/sitecore-integration/01-azure-servicebus-create.png" alt="Create new Azure Service Bus." />
 <figcaption>Create new Azure Service Bus.</figcaption>

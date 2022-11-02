@@ -16,6 +16,6 @@ permalink: /about/
         <p>I am happy to see you. I hope you will find what you need on my blog.</p>
     </div>
     <div class="large-4 column">
-        <img src="/assets/about/profile.jpeg" alt="Profile picture of the blog's author">
+        <img src="/assets/about/profile-new.jpg" alt="Profile picture of the blog's author">
     </div>
 </div>

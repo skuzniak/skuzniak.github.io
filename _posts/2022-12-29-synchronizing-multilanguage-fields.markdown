@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Synchronizing multilanguage fields with Sitecore CMP connector"
-date:   2022-12-15 07:00:0 +0100
+date:   2022-12-29 07:00:0 +0100
 categories: content-hub sitecore-xp
 author: Szymon Kuzniak
 ---

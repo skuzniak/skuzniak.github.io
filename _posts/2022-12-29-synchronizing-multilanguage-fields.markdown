@@ -60,6 +60,6 @@ And finally the configuration that has to be installed in the `App_Config/Includ
 
 <script src="https://gist.github.com/skuzniak/f40aa89a1b426a9fa72df0b3fcc6ea44.js"></script>
 
-Now the importing for multilanguage fields should be working.
+Now the import of multilanguage fields should be working.
 
 Happy coding!

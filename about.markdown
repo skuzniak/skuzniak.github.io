@@ -9,7 +9,8 @@ permalink: /about/
         <h2>Senior Sitecore Developer</h2>
         <h3>sitecore@kuzniak.net</h3>
         <p>Hi,</p>
-        <p>I have been working with Sitecore for 11 years. 
+        <p>I have been working with Sitecore for 11 years.
+		In 2023 I have been awarded a Sitecore Technology MVP.
         I went all the way, from the good old classic Sitecore websites, to SXA based microsites, 
         to headless solutions and now I am bravely exploring the new world of Sitecore's Content Hub.</p>
         <p>In this blog I am writing about anything related to Sitecore, that I found challenging or interesting.</p>
@@ -17,5 +18,6 @@ permalink: /about/
     </div>
     <div class="large-4 column">
         <img src="/assets/about/profile.jpeg" alt="Profile picture of the blog's author">
+        <img src="/assets/about/mvp-badge.jpg" alt="Sitecore Technology MVP 2023 badge.">
     </div>
 </div>

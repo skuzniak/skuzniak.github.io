@@ -1,11 +1,11 @@
 ---
 layout: post
 title:  "Content Hub security 101 - managing multiple similar usergroups"
-date:   2023-03-31 07:00:0 +0100
+date:   2023-03-30 07:00:0 +0100
 categories: content-hub security
 author: Szymon Kuzniak
 ---
-Content Hub security model seems pretty simple - there are rules for entity types with conditions and a set of available access rights.
+Content Hub security model seems pretty simple - there are rules for entity types with conditions, and a set of available access rights.
 What can potentially go wrong?
 
 ## The scenario
@@ -18,7 +18,7 @@ Oh, and there are users who can review more than one market.
 Let's see what do I have at the beginning.
 
 <figure>
-<img src="/assets/posts/content-hub-security-pt1/01-initial-example.jpg" alt="The initial scenario with two images that belongs to different markets." />
+<img src="/assets/posts/content-hub-security-pt1/01-initial.jpg" alt="The initial scenario with two images that belongs to different markets." />
 <figcaption>The initial scenario with two images that belongs to different markets.</figcaption>
 </figure>
 
@@ -70,7 +70,7 @@ The problem now, is that once I apply those two groups to the user, in a similar
 
 | Policies combination | The result |
 |---|---|
-| <figure><img src="/assets/posts/content-hub-security-pt1/02-policy-combination-any.jpg" alt="The result of applying new groups to the user with ANY policies combination." /></figure> | <figure><img src="/assets/posts/content-hub-security-pt1/01-initial-example.jpg" alt="The initial scenario with two images that belongs to different markets." /></figure> |
+| <figure><img src="/assets/posts/content-hub-security-pt1/02-policy-combination-any.jpg" alt="All policies are combined using ANY combination." /></figure> | <figure><img src="/assets/posts/content-hub-security-pt1/03-policy-combination-any-result.jpg" alt="As a result of applying new groups to the user with ANY policies combination the user can approve all assets." /></figure> |
 
 Why did this happen?
 
@@ -84,7 +84,7 @@ If I change the combination to **All** the effect will be even worse, because th
 
 | Policies combination | The result |
 |---|---|
-| <figure><img src="/assets/posts/content-hub-security-pt1/04-policy-combination-all.jpg" alt="The result of applying new groups to the user with ALL policies combination." /></figure> | <figure><img src="/assets/posts/content-hub-security-pt1/01-initial-example.jpg" alt="The initial scenario with two images that belongs to different markets." /></figure> |
+| <figure><img src="/assets/posts/content-hub-security-pt1/04-policy-combination-all.jpg" alt="All policies are combined using ALL combination." /></figure> | <figure><img src="/assets/posts/content-hub-security-pt1/05-policy-combination-all-result.jpg" alt="As a result of applying new groups to the user with ALL policies combination the user can't even access the page'." /></figure> |
 
 #### The solution - combine them both
 
@@ -101,8 +101,13 @@ On the top level the groups are still combined using ANY combination, as in the 
 
 Using this approach, it is possible to keep the groups small and reusable, and easily join them as much as it is needed.
 
+<figure>
+<img src="/assets/posts/content-hub-security-pt1/08-the-sweetspot.jpg" alt="Final result, where user can accept only assets that belong to their market." />
+<figcaption>Final result, where user can accept only assets that belong to their market.</figcaption>
+</figure>
+
 Key takeovers:
 
 * When using **ANY** policy combination, the access is granted if **any** of the policies grants access.
 * When using **ALL** policy combination, the access is granted if **all** of the policies **combined** grant the access.
-* As a general rule of thumb, you should always use **Any** policy combination on the top level and **All** policy combination to join policies into a single one.
+* As a general rule of thumb, you should always use **Any** policy combination on the top level and **All** policy combination within a set of policies to join them into a single one.

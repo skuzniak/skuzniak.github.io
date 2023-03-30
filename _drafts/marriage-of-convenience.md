@@ -1,2 +1,0 @@
-When I first heard about Content Hub I thought it is somehow strange that Sitecore invests into yet another content mamangement system.
-At the same time I saw companies struggling with content production and entry in two separate departments.

@@ -1,23 +1,24 @@
 ---
 layout: post
 title:  "Supercharge your entity definition - pt 1. State flows"
-date:   2024-05-09 07:00:0 +0100
+date:   2024-08-13 07:00:0 +0100
 categories: content-hub entity-definition
 author: Szymon Kuzniak
 ---
 
 Let's be honest.
-Documentation is a great thing, but sometimes you just need to get your hands dirty and do some exercise to actually understand the concept.
+Documentation is a great thing, but sometimes you just need to get your hands dirty and do some exercise, to actually understand the concept.
 That's how I came up with the idea of this little blog post series.
 
-You see, there are few switches ready to be enabled on the entity definition page, and I have a weird impression they can be really useful.
-I had an occasion to work with one of them - the State Flow - and I would love to have an article which would describe every aspect of the feature I was enabling.
-Hence, I'm going to write one about State Flows, but I want to also check what other switches do to complete the series.
+You see, in Content Hub, in each entity definition, there are few switches ready to be enabled, and I have a weird impression they can be really useful.
+I had an occasion to work with one of them - the **State Flows** - and I would love to have an article which would describe every aspect of it.
+Hence, I'm going to write one about State Flows, but I want to also check what other switches do, to complete the series.
+It will cover what's already in the documentation, but I'll also include some information that I found out by trial and error.
 
 Let's go!
 
 A bit of theory first.
-If you go to your entity definition, and expand three dots menu at the top right corner, you will find Enable/Disable option as shown on the picture below.
+If you go to your entity definition, and expand three dots menu in the top right corner, you will find *Enable/Disable* option as shown on the picture below.
 
 <figure>
 <img src="/assets/posts/supercharge-1/01-enable-disable-position.png" alt="The Enable/Disable menu option on the entity definition." />
@@ -25,14 +26,18 @@ If you go to your entity definition, and expand three dots menu at the top right
 </figure>
 
 This is where our magical switches are hiding.
-Each option is briefly described, but it doesn't tell everything.
+Each option is briefly described, but it's far from thelling the whole story.
+Each feature requires some amount of configuration and setting up to work properly.
+And while everything is described in documentation, there are some things that really surprised me.
 
 <figure>
-<img src="/assets/posts/supercharge-1/01-the-switches.png" alt="The switches available to supercharge the entity definition." />
+<img src="/assets/posts/supercharge-1/02-the-switches.png" alt="The switches available to supercharge the entity definition." />
 <figcaption>The switches available to supercharge the entity definition.</figcaption>
 </figure>
 
-For the purpose of writing those articles, I have created a simple entity definition, which I'm going to supercharge with various features.
+To best illustrate what will be the effect of enabling the features, I needed a playground.
+
+For the purpose of writing these articles, I have created a simple entity definition, which I'm going to gradually supercharge.
 Initially, I created a page with bare list of the entities, on which I can do some basic operations such as delete or edit them.
 
 <figure>
@@ -47,63 +52,81 @@ I also had to create a simple details page, which is required when creating new 
 <figcaption>The page with simple entity details.</figcaption>
 </figure>
 
-I will use those pages to add components which will become available as I will be enabling new features.
+I will use these pages to add components which will become available, as I will be enabling new features.
 
 ## State Flow
 
-The State Flow is just a fancy name for a good old workflow.
+As I menioned, I decided to start with State flows feature.
+It is actually just another name for a good old workflow.
 It can be applied to any definition.
 
 ### Enabling State Flow
 
 Before you enable State Flow, go to the entity settings and set a Display Template.
 The Display Template is used to represent your entities instead of entity ID and usually uses one of the fields in the curly brackets.
-But it is a template so you can also add some text if needed.
+Because it is a template, you can combine more fields and also add some text if needed.
 
 <figure>
-<img src="/assets/posts/supercharge-1/04-details-page.png" alt="The Display Template." />
+<img src="/assets/posts/supercharge-1/04.1-entity-display-template.jpg" alt="The Display Template." />
 <figcaption>The Display Template.</figcaption>
 </figure>
 
-Once the Disaply Template is set up, go to Enable/Disable page and switch the State flow switch.
-There are three configuration options available, **all of them can be changed later**.
+Once the Disaply Template is set up, go to *Enable/Disable* pop-up and switch the State flow switch.
+There are three configuration options available.
+<div class="alert-box alert-box--info hideit">
+    <p>
+        All three options here can be changed later.
+        If you need to edit any of them, simply go the <em>Enable/Disable</em> pop-up and click on Edit button next to the enabled option.
+    </p>
+</div> 
 
-**Enable assignees** - this one will enable option to keep or update assignees during the state flow transition.
+**Enable assignees** - enables an option, to configure what to do with the assignees during the state flow transition.
+When set to true, on every transition in the state flow configuration, there will be additional option **Update Asignees** available.
 
-**Detail page** - this one is straightforward - a page used in notification email template.
+**Detail page** - this one is straightforward and well explained - it's a page used in notification email template.
 
-**Fields** - this one allows you to choose one of the three options for selected properties and relations - **Keep**, **Clean** and **Overwrite** in each state.
-The action will be applied on the transition to a given state.
+**Fields** - allows you to add additional fields, for which one of three actions - **Keep**, **Clean** and **Overwrite** - can be selected in each transition. It works in similar way to **Enable assignees** but for other editable fields.
 
 Eg.
-* Field *Name* is selected.
-* On the state **Review** the action is set to **Clean**
-* On the state **Final** the action is set to **Keep**
-* Every time the entity will reach state **Review** field *Name* will be, surprise, surprise, cleaned.
-* Every time the entity will reach state **Final** the field *Name* will not change.
+Field *Name* is selected.
 
-This might be useful for helper fields such as comments, that can have different values throughout the entire state flow.
+In every transition in the state flow there will be additional **Update Name** option available.
+This option allows you to choose what happens with the *Name* field when product reaches the state.
+<figure>
+<img src="/assets/posts/supercharge-1/04.2-additional-fields.jpg" alt="An example of additional field in the state transition." />
+<figcaption>An example of additional field in the state transition. There's also Update Assignees option visible.</figcaption>
+</figure>
 
 ### What happens
 
-* Entity definition gets new relations:
-    * EntityNameToStateMachine
-    * EntityNameToAvailableRoute
-    * EntityNameToActiveState
-    * StateUserToEntityName
-    * AssignedUserToEntityName
-    * AssignedGroupToEntityName
-* In the operation component two operations are now available
-    * Assign state flows - allows to select one of the state flows compatible with current definition
-    <img src="/assets/posts/supercharge-1/05-assign-state-flows-button.png" alt="A screenshot of the application showing how does the assign state flows operation works." />
-    * State flows transitions - allows to use one of the existing transitions
-    <img src="/assets/posts/supercharge-1/06-state-flows-transition-button.png" alt="A screenshot of the application showing how does the state flows transition operation works." />
+Let's now see what actually happens when the feature is enabled.
+
+Entity definition gets new relations:
+* EntityNameToStateMachine
+* EntityNameToAvailableRoute
+* EntityNameToActiveState
+* StateUserToEntityName
+* AssignedUserToEntityName
+* AssignedGroupToEntityName
+
+In the operation component two operations are now available
+* Assign state flows - allows to select one of the state flows compatible with current definition
+<img src="/assets/posts/supercharge-1/05-assign-state-flows-button.png" alt="A screenshot of the application showing how does the assign state flows operation works." />
+* State flows transitions - allows to use one of the existing transitions
+<img src="/assets/posts/supercharge-1/06-state-flows-transition-button.png" alt="A screenshot of the application showing how does the state flows transition operation works." />
+
+You will be able to create a state flow connected with this entity definition.
 
 ### Creating state flow
 
 Once the entity is enabled to use state flows, a state flow has to be created.
 State flows are bound to the entity definition and each state flow can only work with one entity definition.
-**State flow will be deleted when the state flow feature is disabled on the entity definition.**
+It means you have to enable the feature for the entity definition before you can create state flow for it.
+
+<div class="alert-box alert-box--notice hideit">
+    <p>State flow will be deleted when the state flow feature is disabled on the entity definition.</p>
+</div>
+
 
 In order to create new state flow:
 
@@ -121,13 +144,12 @@ It will open following dialog and will reqruie to provide some data for the stat
 
 *Name* and *Description* - quite self explanatory
 
-*Update assignees* - controls what happens to the assignees when the state is reached.
+*Update assignees* - This option is only available when it was enabled when configuring the State flows featuch in the *Enable/Disable* pop-up.
+It controls what happens to the assignees when the state is reached.
 When Overwrite is selected it is possible to define either static users/groups by name or dynamic asignees/assignee groups.
+
 Dynamic assignee groups is an interesting concept here, which is not explained clearly in the documentation.
-
-TODO
-
-First state on the list is treated as an initial state.s
+I couldn't figure out how it works yet, but this is definitely on my TODO list.
 
 #### Transitions
 
@@ -147,7 +169,7 @@ Transitions are created for each state, and state can have more than one transit
 ### Using state flow
 
 When state flows feature is enabled it will not have any immediate effect on the entities.
-Old entities will remain unchanged and new entities will not get the stateflow assigned automatically.
+Old entities will remain unchanged and new entities will not get the state flow assigned automatically.
 
 To ensure all new entities will get the state flow assigned, we will need an action and an appropriate trigger.
 
@@ -174,22 +196,26 @@ To ensure all new entities will get the state flow assigned, we will need an act
 The buttons to progress the entity in the state flow have to added manually.
 This can be done on the details page using *Operations* component or on the *Search* component when configuring the view.
 
-#### Operations component on the details page
+## How about existing entities
 
+Depending on how many items require updating this can be done in at least two ways:
 
-### Imporant remarks
+* Update the relations using Excel
+* Write a small application that will go over the entities and update them
 
-### Assign default state flow
+This article grew quite a lot, so I will write a separate article just to cover this topic.
 
+## State flows and languages
 
+If you store your content in multiple languages, within the same entity, you have to remember that state flow transitions will affect all of them.
+By only enabling state flows, it is not possible to have the same entity in different states for different languages.
+It means that if the entity is approved, it is approved for all languages.
+When it is rejected, it will be rejected for all languages.
 
-Additionally the state flow is not assigned to new entities by default.
+In order to have separate state flows for each language, another switch needs to be enabled.
+But this is a material for another blog post.
 
-In order to fully configure state flow for the entity complete the following steps:
-
-1. Enable the feature
-
-#### Disabling state flows
+## Disabling state flows
 
 Be careful when disabling state flows.
 The message says you will loose the data and this is correct, however not everything will be cleared.
@@ -198,4 +224,15 @@ Few relations related to assignement will stay.
 Also on the operations component the state flow related operations will not be removed.
 The page with this component will be operational but will produce an error.
 <img src="/assets/posts/supercharge-1/08-missing-state-flows-error.png" alt="A screenshot of the application showing the error about definion not enabled for state flows." />
-You will however loose all state flow definitions that were related to the eneity definion that the state flow is being disabled.
+<div class="alert-box alert-box--error">
+    <p>You will however loose all state flow definitions that were related to the eneity definion that the state flow is being disabled.</p>
+</div>
+
+## Useful links
+
+* [Sitecore Documentation about State flows](https://doc.sitecore.com/ch/en/users/content-hub/state-flows.html)
+
+## Conclusion
+
+Stateflows are really powerful and useful feature.
+I hope this little article will help you with the configuration and getting started with it.
